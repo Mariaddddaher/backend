@@ -14,6 +14,7 @@ public class Main {
 
     @GetMapping("/")
     public String greet() {
+        System.out.println("Y");
         return "Hello";
     }
 
