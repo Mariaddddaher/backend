@@ -16,6 +16,7 @@ public class Main {
     public String greet() {
         System.out.println("Y");
         return "Hello";
+        System.out.println("WIW");
     }
 
 }
