@@ -1,7 +1,8 @@
 package savvy.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import savvy.entities.User;
+import savvy.entities.Candidate;
+import savvy.entities.Candidate;
 
-public interface UserInterface extends MongoRepository<User, Integer> {
+public interface UserInterface extends MongoRepository<Candidate, Integer> {
 }

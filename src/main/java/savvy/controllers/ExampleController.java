@@ -1,22 +1,21 @@
 package savvy.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import savvy.entities.User;
-import savvy.repository.UserInterface;
+import savvy.entities.Candidate;
+import savvy.service.UserService;
 
 @RestController
 public class ExampleController {
 
-@Autowired
-UserInterface userinter;
+    @Autowired
+    UserService userService;
 
-    @PostMapping ("/addUser")
-    public void addUser(@RequestBody User user) {
-        userinter.save(user);
+    @PostMapping("/add-candidate")
+    public void addCandidate(@RequestBody Candidate candidate) {
+        userService.saveCandidate(candidate);
 
     }
 }
