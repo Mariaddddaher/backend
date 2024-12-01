@@ -1,11 +1,10 @@
 package savvy.entities;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,10 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class Candidate {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-
     @Column
-    private Integer id;
+    private String id;
 
     @Column
     private String name;
@@ -29,5 +26,7 @@ public class Candidate {
     @Column
     private String address;
 
+    @Column
+    private PDFDocument pdfDocument;
     }
 

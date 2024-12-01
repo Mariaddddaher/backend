@@ -4,5 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import savvy.entities.Candidate;
 
 
-public interface UserInterface extends MongoRepository<Candidate, Integer> {
+public interface UserRepository extends MongoRepository<Candidate, String> {
 }
