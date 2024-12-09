@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+    version: 1.0.0
+    title: Savvy
+    contact:
+        email: contact@example.com
+        url: 'http://example.com/contact'
+    license:
+        name: Apache 2.0
+        url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    description: API for managing users/candidates.
+paths:
+    /candidate/add:
+        post:
+            operationId: addCandidate
+            summary: Add a new candidate.
+            tags:
+                - candidate
+            description: Registers a new candidate to the database.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CandidateDto'
+
+            responses:
+                "400":
+                    description: Ivalid input.
+                "200":
+                    description: Candidate added successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CandidateDto'
+    /candidate/all:
+        get:
+            operationId: getAllCandidates
+            summary: Get all candidates.
+            tags:
+                - candidate
+            description: A list of candidates.
+            responses:
+                "200":
+                    description: Returns a JSON array with candidates data successfuly.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/CandidateDto'
+    /candidate/{id}:
+        get:
+            operationId: getCandidateById
+            summary: Get a candidate by ID
+            tags:
+                - candidate
+            parameters:
+                -   in: path
+                    name: id
+                    schema:
+                        type: string
+                    required: true
+                    description: Numeric ID of the user to get
+            responses:
+                "200": # status code
+                    description: Candidate details retrieved by ID successfuly.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CandidateDto"
+    /candidate/update/{id}:
+        put:
+            operationId: updateCandidate
+            tags:
+                - candidate
+            parameters:
+                -   in: path
+                    name: id
+                    schema:
+                        type: string
+                    required: true
+                    description: The ID of the candidate to update.
+            summary: Update a candidate.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CandidateDto'
+            responses:
+                "200": # status code
+                    description: Candidate updated successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CandidateDto'
+                "404":
+                    description: candidate not found
+
+    /candidate/delete/{id}:
+        delete:
+            operationId: deleteCandidate
+            parameters:
+                -   in: path
+                    name: id
+                    schema:
+                        type: string
+                    required: true
+                    description: The ID of the candidate to delete
+            summary: Delete a candidate.
+            tags:
+                - candidate
+            responses:
+                "200": # status code
+                    description: Candidate deleted successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+    /candidate/{candidateId}/uploadPDF:
+        post:
+            operationId: uploadPDF
+            parameters:
+                -   in: path
+                    name: candidateId
+                    schema:
+                        type: string
+                    required: true
+                    description: The ID of the candidate to attach the PDF
+            summary: Upload a PDF for a candidates.
+            tags:
+                - candidate
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                file:
+                                    type: string
+                                    format: binary
+                                    description: The PDF file to upload
+            responses:
+                "200": # status code
+                    description: PDF uploaded successfully
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                "500":
+                    description: Failed to upload PDF
+components:
+    schemas:
+        PDFDocumentDto:
+            type: object
+            properties:
+                fileName:
+                    type: string
+                content:
+                    type: string
+        CandidateDto:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                age:
+                    type: integer
+                address:
+                    type: string
+                pdfDocument:
+                    $ref: "#/components/schemas/PDFDocumentDto"

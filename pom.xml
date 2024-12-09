@@ -57,10 +57,64 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>2.2.20</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<!-- RELEASE_VERSION -->
+				<version>7.10.0</version>
+				<!-- /RELEASE_VERSION -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<!-- To print detailed logs during the plugin execution -->
+							<verbose>true</verbose>
+							<!-- <templateDirectory>${project.basedir}/src/main/resources/openapi-custom-template</templateDirectory> -->
+							<!-- Path to api contract file -->
+							<inputSpec>${project.basedir}/src/main/resources/static/api.yaml</inputSpec>
+							<!-- Full list of all generators - https://openapi-generator.tech/docs/generators#server-generators -->
+							<generatorName>spring</generatorName>
+							<library>spring-boot</library>
+							<!-- Name of the package where handler, models and invokers should
+                                be generated -->
+							<apiPackage>${project.basedir}/target/generated</apiPackage>
+							<modelPackage>${project.basedir}/target/generated</modelPackage>
+							<invokerPackage>${project.basedir}/target/generated</invokerPackage>
+							<configOptions>
+								<useSpringBoot3>true</useSpringBoot3>
+								<!-- Name of the source folder path under 'generated' folder -->
+								<sourceFolder>src/main/java</sourceFolder>
+								<!-- Set to true if you want to generate a delegate class, which
+                                    will be injected in controller -->
+								<delegatePattern>false</delegatePattern>
+								<!-- If set to true, generates only API controller interface and
+                                    you need to provide the implementation -->
+								<interfaceOnly>true</interfaceOnly>
+								<openApiNullable>false</openApiNullable>
+															</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -35,7 +35,7 @@ public class ExampleController {
     }
 
     @PutMapping("/update/{id}")
-    public Candidate updateUser(@PathVariable String id, @RequestBody Candidate candidate) {
+    public void updateUser(@PathVariable String id, @RequestBody Candidate candidate) {
         return userService.updateCandidate(id, candidate);
     }
 
@@ -54,6 +54,5 @@ public class ExampleController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload PDF.");
         }
     }
-
 }
 
